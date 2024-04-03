@@ -34,6 +34,7 @@ public class Menu {
             case 1:
                 System.out.println("\n***Opcion Generar referencias***");
                 opcionGenerarReferencias();
+                System.out.println("***Archivo generado con el nombre Registros.txt***\n");
                 break;
 
             case 2:
