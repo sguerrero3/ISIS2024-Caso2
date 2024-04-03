@@ -71,8 +71,8 @@ public class Tablasss {
 
     public synchronized void terminado() {
 
-        System.out.println(numeroFallas);
-        System.out.println(numeroHit);
+        System.out.println("Numero de Fallas: " + numeroFallas);
+        System.out.println("Numero de Hits" + numeroHit);
 
     }
 
