@@ -12,8 +12,9 @@ public class Tablasss {
     private int numeroHit;
     private int numeroFallas;
     private int marcosAsignados;
+    private Menu menu;
 
-    public Tablasss(int numeroPaginas, int numeroMarcosPagina, ArrayList<Integer> paginasReferenciadas) {
+    public Tablasss(int numeroPaginas, int numeroMarcosPagina, ArrayList<Integer> paginasReferenciadas, Menu menu) {
 
         this.numeroPaginas = numeroPaginas;
         this.numeroMarcosPagina = numeroMarcosPagina;
@@ -23,6 +24,7 @@ public class Tablasss {
         this.numeroHit = 0;
         this.numeroFallas = 0;
         this.marcosAsignados = 0;
+        this.menu = menu;
     }
 
     public synchronized void buscar(int pagina) {
@@ -71,16 +73,18 @@ public class Tablasss {
 
     public synchronized void terminado() {
 
-        System.out.println("Numero de Fallas: " + numeroFallas);
-        System.out.println("Numero de Hits" + numeroHit);
+        System.out.println("\nNumero de Fallas: " + numeroFallas);
+        System.out.println("Numero de Hits: " + numeroHit);
+        System.out.println("Total: " + (numeroFallas + numeroHit));
 
+        System.out.println("\n***Simulacion Terminada***\n");
     }
 
     public void simular() {
 
-        System.out.println("SIMULANDO");
+        System.out.println("\n**Simulacion Iniciada**");
 
-        ManejadorTablaPaginas tb = new ManejadorTablaPaginas(this, paginasReferenciadas);
+        ManejadorTablaPaginas tb = new ManejadorTablaPaginas(this, paginasReferenciadas, menu);
         tb.start();
 
         ManejadorTablaR tr = new ManejadorTablaR(this);

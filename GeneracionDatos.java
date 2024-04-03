@@ -10,11 +10,13 @@ public class GeneracionDatos {
     private int numeroPaginas;
     private int numeroRegistros;
     private ArrayList<Integer> paginasReferenciadas;
+    private Menu menu;
 
-    public GeneracionDatos(int numeroMarcosPagina, String archivoReferencias){
+    public GeneracionDatos(int numeroMarcosPagina, String archivoReferencias, Menu menu){
         this.numeroMarcosPagina = numeroMarcosPagina;
         this.archivoReferencias = archivoReferencias;
         this.paginasReferenciadas = new ArrayList<Integer>();
+        this.menu = menu;
     }
 
     public void generarArchivoDatos(){
@@ -36,7 +38,7 @@ public class GeneracionDatos {
                 paginasReferenciadas.add(Integer.parseInt(reader.readLine().split(",")[1]));
             }
 
-            Tablasss tablas = new Tablasss(numeroPaginas, numeroMarcosPagina, paginasReferenciadas);
+            Tablasss tablas = new Tablasss(numeroPaginas, numeroMarcosPagina, paginasReferenciadas, menu);
             tablas.simular();
 
         }catch(IOException e){

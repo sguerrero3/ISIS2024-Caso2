@@ -1,13 +1,17 @@
 import java.util.Scanner;
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
 
 public class Menu {
 
     //ATRIBUTOS
     private Scanner scanner;
+    private CyclicBarrier barrera;
 
     //CONSTRUCTOR
     public Menu(Scanner scanner) {
         this.scanner = scanner;
+        this.barrera = new CyclicBarrier(2);
     }
 
     //MOSTRAR MENU PRINCIPAL
@@ -28,7 +32,7 @@ public class Menu {
 
 
     //INSTRUCCIONES DE QUE HACER CON CADA OPCION
-    public void doOpciones(int opcion){
+    public void doOpciones(int opcion) throws InterruptedException, BrokenBarrierException{
 
         switch(opcion){
             case 1:
@@ -40,6 +44,7 @@ public class Menu {
             case 2:
                 System.out.println("\n***Opcion Calcular datos***");
                 opcionCalcularDatos();
+                barrera.await();
                 break;
 
             case 3:
@@ -73,13 +78,16 @@ public class Menu {
         System.out.print("Indique el nombre del archivo de referencias: ");
         String archivoRef = scanner.nextLine();
 
-        GeneracionDatos generacionDatos = new GeneracionDatos(marcosPagina, archivoRef);
+        GeneracionDatos generacionDatos = new GeneracionDatos(marcosPagina, archivoRef, this);
         generacionDatos.generarArchivoDatos();
     }
 
+    public CyclicBarrier getBarrera(){
+        return barrera;
+    }
 
     //PROGRAMA PRINCIPAL
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException, BrokenBarrierException {
         Scanner scanner = new Scanner(System.in);
         Menu menu = new Menu(scanner);
 
