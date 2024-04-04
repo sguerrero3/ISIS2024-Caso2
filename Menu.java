@@ -88,6 +88,8 @@ public class Menu {
         System.out.print("Indique el nombre del archivo de referencias: ");
         String archivoRef = scanner.nextLine();
 
+        continuar = true;
+
         GeneracionDatos generacionDatos = new GeneracionDatos(marcosPagina, archivoRef, this);
         generacionDatos.generarArchivoDatos();
     }
