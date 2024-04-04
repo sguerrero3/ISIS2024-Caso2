@@ -22,7 +22,7 @@ public class ManejadorTablaPaginas extends Thread{
             tabla.buscar(paginasReferenciadas.get(i));
 
             try {
-                Thread.sleep(2);
+                Thread.sleep(1);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

@@ -33,7 +33,7 @@ public class Tablasss {
 
             numeroFallas++;
 
-            if (marcosAsignados == numeroMarcosPagina) {
+            if (marcosAsignados >= numeroMarcosPagina) {
 
                 int sacar = -1;
 
