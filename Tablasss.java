@@ -63,6 +63,7 @@ public class Tablasss {
         } else {
 
             numeroHit++;
+            tablaBitR.set(pagina, 1);
 
         }
     }
@@ -78,6 +79,8 @@ public class Tablasss {
         System.out.println("Total: " + (numeroFallas + numeroHit));
 
         System.out.println("\n***Simulacion Terminada***\n");
+
+        menu.noContinuar();
     }
 
     public void simular() {
@@ -85,9 +88,9 @@ public class Tablasss {
         System.out.println("\n**Simulacion Iniciada**");
 
         ManejadorTablaPaginas tb = new ManejadorTablaPaginas(this, paginasReferenciadas, menu);
-        tb.start();
+        ManejadorTablaR tr = new ManejadorTablaR(this, menu);
 
-        ManejadorTablaR tr = new ManejadorTablaR(this);
+        tb.start();
         tr.start();
 
     }

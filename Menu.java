@@ -7,11 +7,13 @@ public class Menu {
     //ATRIBUTOS
     private Scanner scanner;
     private CyclicBarrier barrera;
+    private boolean continuar;
 
     //CONSTRUCTOR
     public Menu(Scanner scanner) {
         this.scanner = scanner;
         this.barrera = new CyclicBarrier(2);
+        this.continuar = true;
     }
 
     //MOSTRAR MENU PRINCIPAL
@@ -28,6 +30,14 @@ public class Menu {
     //GET OPCION
     public int getOpcion(){
         return scanner.nextInt();
+    }
+
+    public boolean continuar(){
+        return continuar;
+    }
+
+    public void noContinuar(){
+        continuar = false;
     }
 
 
