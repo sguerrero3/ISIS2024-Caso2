@@ -78,7 +78,31 @@ public class Tablasss {
         System.out.println("Numero de Hits: " + numeroHit);
         System.out.println("Total: " + (numeroFallas + numeroHit));
 
+        int tiempoHit = 30; // 30 ns por hit
+        int tiempoMiss = 10 * 1000000; // 10 ms por miss convertido a ns
+
+        // Tiempo con hits y misses
+        long tiempoConHitsYMisses = (long)numeroHit * tiempoHit + (long)numeroFallas * tiempoMiss;
+        int totalReferencias = numeroFallas + numeroHit;
+
+        // Tiempo si todas las referencias estuvieran en RAM
+        long tiempoTodoEnRAM = (long)totalReferencias * tiempoHit;
+
+        // Tiempo si todas las referencias condujeran a fallas de página
+        long tiempoTodoMisses = (long)totalReferencias * tiempoMiss;
+
+        // Convierte los resultados a milisegundos
+        double tiempoConHitsYMissesMs = tiempoConHitsYMisses / 1000000.0;
+        double tiempoTodoEnRAMMs = tiempoTodoEnRAM / 1000000.0;
+        double tiempoTodoMissesMs = tiempoTodoMisses / 1000000.0;
+
+        System.out.println("Tiempo con hits y misses: " + tiempoConHitsYMissesMs + " ms");
+        System.out.println("Tiempo si todo estuviera en RAM: " + tiempoTodoEnRAMMs + " ms");
+        System.out.println("Tiempo si todo fueran misses: " + tiempoTodoMissesMs + " ms");
+   
+
         System.out.println("\n***Simulacion Terminada***\n");
+
 
         menu.noContinuar();
     }
