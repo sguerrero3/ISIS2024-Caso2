@@ -35,7 +35,7 @@ public class Tablasss {
 
             if (marcosAsignados >= numeroMarcosPagina) {
 
-                int sacar = -1;
+                int sacar = 0;
 
                 for (int i = 0; i < tablaBitR.size(); i++) {
 
