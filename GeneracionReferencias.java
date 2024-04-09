@@ -63,8 +63,33 @@ public class GeneracionReferencias {
         return respuesta;
     }
 
+    //VERIFICAR SI UN DATO ESTA DIVIDIDO EN DOS PAGINAS
+    public boolean datoDividido(String pagDes){
+
+
+
+        String[] numbersAsString = pagDes.split(",");
+        int desp =  Integer.parseInt(numbersAsString[1]);
+
+        if (desp>(tamanioPagina-4)){
+            return true;
+        }
+        return false;
+    }
+
+    //DECIR CUAL ES LA SIGUIENTE PAGINA
+    public String nextPage(String pagDes){
+
+        String[] numbersAsString = pagDes.split(",");
+        int pag = Integer.parseInt(numbersAsString[0]) + 1;
+
+        return pag + ",0";
+    }
+
     //GENERAR REFERENCIAS
     public void generarReferencias(){
+
+        String pagDes;
 
         for(int i=1; i<tamanioMatriz-1; i++){
             for(int j=1; j<tamanioMatriz-1; j++){
@@ -77,32 +102,121 @@ public class GeneracionReferencias {
                         int i3 = 1+a;
                         int j3 = 1+b;
                         
-                        registros.add("M["+ i2 + "][" + j2 + "]," + calcularPaginaVirtual(2, i2, j2)  + ",R");
-                        reg += 1;
-                        registros.add("F["+ i3 + "][" + j3 + "]," + calcularPaginaVirtual(1, i3, j3)  + ",R");
-                        reg += 1;
+
+                        pagDes = calcularPaginaVirtual(2, i2, j2);
+                        if (datoDividido(pagDes)){
+
+                            registros.add("M["+ i2 + "][" + j2 + "]," + pagDes + ",R");
+                            reg += 1;
+
+                            registros.add("M["+ i2 + "][" + j2 + "]," + nextPage(pagDes) + ",R");
+                            reg += 1;
+                        }
+                        else{
+                            registros.add("M["+ i2 + "][" + j2 + "]," + pagDes + ",R");
+                            reg += 1;
+                        }
+
+
+                        pagDes = calcularPaginaVirtual(1, i3, j3);
+                        if (datoDividido(pagDes)){
+                            registros.add("F["+ i3 + "][" + j3 + "]," + pagDes  + ",R");
+                            reg += 1;
+                            registros.add("F["+ i3 + "][" + j3 + "]," + nextPage(pagDes)  + ",R");
+                            reg += 1;
+
+
+                        }
+                        else{
+                            registros.add("F["+ i3 + "][" + j3 + "]," + pagDes  + ",R");
+                            reg += 1;
+                        }
+                        
                     }
                 }
 
-                registros.add("R["+ i + "][" + j + "]," + calcularPaginaVirtual(3, i, j)  + ",W");
-                reg += 1;
+                pagDes = calcularPaginaVirtual(3, i, j);
+                if (datoDividido(pagDes)){
+
+                    registros.add("R["+ i + "][" + j + "]," + pagDes  + ",W");
+                    reg += 1;
+
+                    registros.add("R["+ i + "][" + j + "]," + nextPage(pagDes) + ",W");
+                    reg += 1;
+                
+                }
+                else{
+                    registros.add("R["+ i + "][" + j + "]," + pagDes  + ",W");
+                    reg += 1;
+                }
+                
             }
         }
 
         for(int i=0; i<tamanioMatriz; i++){
 
-            registros.add("R["+ 0 + "][" + i + "]," + calcularPaginaVirtual(3, 0, i)  + ",W");
-            reg += 1;
-            registros.add("R["+ (tamanioMatriz-1) + "][" + i + "]," + calcularPaginaVirtual(3, tamanioMatriz-1, i)  + ",W");
-            reg += 1;
+
+            pagDes = calcularPaginaVirtual(3, 0, i);
+            if (datoDividido(pagDes)){
+
+                registros.add("R["+ 0 + "][" + i + "]," + pagDes  + ",W");
+                reg += 1;
+
+                registros.add("R["+ 0 + "][" + i + "]," +  nextPage(pagDes)   + ",W");
+                reg += 1;
+            }
+            else{
+                registros.add("R["+ 0 + "][" + i + "]," + pagDes  + ",W");
+                reg += 1;
+            }
+
+            pagDes = calcularPaginaVirtual(3, tamanioMatriz-1, i);
+            if(datoDividido(pagDes)){
+                registros.add("R["+ (tamanioMatriz-1) + "][" + i + "]," + pagDes  + ",W");
+                reg += 1;
+
+                registros.add("R["+ (tamanioMatriz-1) + "][" + i + "]," + nextPage(pagDes)  + ",W");
+                reg += 1;
+
+            }
+            else{
+                registros.add("R["+ (tamanioMatriz-1) + "][" + i + "]," + pagDes  + ",W");
+                reg += 1;
+            }
+            
         }
 
         for(int i=1; i<tamanioMatriz-1; i++){
 
-            registros.add("R["+ i + "][" + 0 + "]," + calcularPaginaVirtual(3, i, 0)  + ",W");
-            reg += 1;
-            registros.add("R["+ i + "][" + (tamanioMatriz-1) + "]," + calcularPaginaVirtual(3, i, tamanioMatriz-1)  + ",W");
-            reg += 1;
+
+            pagDes = calcularPaginaVirtual(3, i, 0);
+            if(datoDividido(pagDes)){
+                registros.add("R["+ i + "][" + 0 + "]," + pagDes + ",W");
+                reg += 1;
+
+                registros.add("R["+ i + "][" + 0 + "]," + nextPage(pagDes) + ",W");
+                reg += 1;
+
+            }
+            else{
+                registros.add("R["+ i + "][" + 0 + "]," + pagDes + ",W");
+                reg += 1;
+            }
+
+            
+            pagDes = calcularPaginaVirtual(3, i, tamanioMatriz-1);
+            if(datoDividido(pagDes)){
+                registros.add("R["+ i + "][" + (tamanioMatriz-1) + "]," + pagDes  + ",W");
+                reg += 1;
+
+                registros.add("R["+ i + "][" + (tamanioMatriz-1) + "]," + nextPage(pagDes)  + ",W");
+                reg += 1;
+
+            }
+            else{
+                registros.add("R["+ i + "][" + (tamanioMatriz-1) + "]," + pagDes  + ",W");
+                reg += 1;
+            }        
         }
 
     }
